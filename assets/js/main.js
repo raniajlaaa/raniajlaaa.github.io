@@ -344,3 +344,77 @@ function updateSlider(tab) {
   document.querySelectorAll(`.resume-slider.${tab} .dot`).forEach(dot => dot.classList.remove('active'));
   document.querySelectorAll(`.resume-slider.${tab} .dot`)[currentSlides[tab]].classList.add('active');
 }
+
+function addResumeSliderSwipe(tab) {
+  const slider = document.querySelector(`.resume-slider.${tab} .slider-track`);
+  if (!slider) return;
+  let startX = 0, currentX = 0, isDragging = false, isMouse = false;
+
+  slider.addEventListener('touchstart', onStart, {passive: true});
+  slider.addEventListener('mousedown', onStartMouse);
+
+  function onStart(e) {
+    isDragging = true;
+    isMouse = false;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    currentX = startX;
+    document.addEventListener('touchmove', onMove, {passive: true});
+    document.addEventListener('touchend', onEnd);
+  }
+  function onStartMouse(e) {
+    if (e.button !== 0) return; // hanya klik kiri
+    isDragging = true;
+    isMouse = true;
+    startX = e.clientX;
+    currentX = startX;
+    document.addEventListener('mousemove', onMoveMouse);
+    document.addEventListener('mouseup', onEndMouse);
+    e.preventDefault();
+  }
+  function onMove(e) {
+    if (!isDragging) return;
+    currentX = e.touches ? e.touches[0].clientX : e.clientX;
+  }
+  function onMoveMouse(e) {
+    if (!isDragging) return;
+    currentX = e.clientX;
+  }
+  function onEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    let deltaX = currentX - startX;
+    let tabKey = tab;
+    let slidesCount = document.querySelectorAll(`.resume-slider.${tab} .dot`).length;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX < 0 && currentSlides[tabKey] < slidesCount - 1) {
+        goToSlide(currentSlides[tabKey] + 1, tabKey);
+      } else if (deltaX > 0 && currentSlides[tabKey] > 0) {
+        goToSlide(currentSlides[tabKey] - 1, tabKey);
+      }
+    }
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+  }
+  function onEndMouse(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    let deltaX = currentX - startX;
+    let tabKey = tab;
+    let slidesCount = document.querySelectorAll(`.resume-slider.${tab} .dot`).length;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX < 0 && currentSlides[tabKey] < slidesCount - 1) {
+        goToSlide(currentSlides[tabKey] + 1, tabKey);
+      } else if (deltaX > 0 && currentSlides[tabKey] > 0) {
+        goToSlide(currentSlides[tabKey] - 1, tabKey);
+      }
+    }
+    document.removeEventListener('mousemove', onMoveMouse);
+    document.removeEventListener('mouseup', onEndMouse);
+  }
+}
+
+// Tambahkan swipe dan drag ke kedua tab setelah DOM siap
+window.addEventListener('DOMContentLoaded', function() {
+  addResumeSliderSwipe('work');
+  addResumeSliderSwipe('project');
+});
