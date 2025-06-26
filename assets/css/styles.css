@@ -3408,6 +3408,7 @@ td:last-child {
     font-weight  : 600;
     margin-bottom: var(--vspace-0_125);
     color        : var(--color-1);
+    color        : #7d7d7d !important; /* change color to text "Hello" */
 }
 
 .s-intro__content-title {
@@ -4213,10 +4214,10 @@ td:last-child {
  *
  * ------------------------------------------------------------------- */
 .s-footer {
-    --bottom-padding: var(--vspace-2_5);
+    --bottom-padding: var(--vspace-1_25);
     background-color: var(--color-3);
     margin-top      : auto;
-    padding-top     : var(--vspace-6);
+    padding-top     : var(--vspace-2);
     padding-bottom  : var(--bottom-padding);
     color           : var(--color-gray-15);
 }
@@ -4261,11 +4262,11 @@ td:last-child {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: var(--vspace-1_25);
-    margin-top: var(--vspace-0_75);
+    padding-top: var(--vspace-0_5);
+    margin-top: var(--vspace-0_5);
     position: relative;
-    padding-left: 3vw;
-    padding-right: 3vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
     width: 100%;
     box-sizing: border-box;
 }
@@ -4274,7 +4275,7 @@ td:last-child {
     width: auto;
     margin-left: 0;
     margin-right: 0;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 .ss-copyright {
     margin: 0;
@@ -4282,6 +4283,7 @@ td:last-child {
     width: auto;
     padding-left: 0;
     flex-shrink: 0;
+    font-size: 1.5rem;
 }
 
 .s-footer__bottom::before {
@@ -4326,8 +4328,8 @@ td:last-child {
         align-items: flex-start;
         justify-content: space-between;
         gap: 0;
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-left: 3vw;
+        padding-right: 3vw;
     }
     .s-footer__social.social-list {
         justify-content: flex-end;
